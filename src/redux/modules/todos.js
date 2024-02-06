@@ -9,35 +9,63 @@ export const addTodo = (payload) => {
   return { type: ADD_TODO, payload };
 };
 
+export const deleteTodo = (payload) => {
+  return { type: DELETE_TODO, payload };
+};
+
 export const switchTodo = (payload) => {
   return { type: SWITCH_TODO, payload };
 };
 
-const initialState = {
-  todos: [
-    {
-      id: shortid.generate(),
-      title: "투두리스트",
-      content: "투두리스트 만들기",
-      isDone: false,
-    },
-  ],
-};
+const initialState = [
+  {
+    id: shortid.generate(),
+    title: "투두리스트",
+    content: "투두리스트 만들기",
+    isDone: false,
+  },
+  {
+    id: shortid.generate(),
+    title: "투두리스트",
+    content: "투두리스트 만들기",
+    isDone: true,
+  },
+];
 
 // 리듀서
 const todos = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      return {
-        ...state,
-        todos: [...state.todos, action.payload],
-      };
+      // action.payload => {새로운 todo item}
+      const newTodoItem = action.payload;
+      return [...state, newTodoItem];
 
     case DELETE_TODO:
-      return; //TODO: 여기 작성
+      // action.payload => 삭제하려는 todo의 id
+      const deleteTargetId = action.payload;
+      const deleteFilteredList = state.filter((item) => {
+        if (item.id === deleteTargetId) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      return deleteFilteredList;
 
     case SWITCH_TODO:
-      return; //TODO: 여기 작성
+      // action.payload => todo의 id
+      const switchTargetId = action.payload;
+      const switchMappedList = state.map((item) => {
+        if (item.id === switchTargetId) {
+          return {
+            ...item,
+            isDone: !item.isDone,
+          };
+        } else {
+          return item;
+        }
+      });
+      return switchMappedList; //TODO: 여기 작성
 
     default:
       return state;

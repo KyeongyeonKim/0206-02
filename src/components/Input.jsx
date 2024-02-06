@@ -10,14 +10,13 @@ function Input() {
 
   const addTodoBtn = (event) => {
     event.preventDefault();
-    dispatch(
-      addTodo({
-        id: shortid.generate(),
-        title,
-        content,
-        isDone: false,
-      })
-    );
+    const newTodo = {
+      id: shortid.generate(),
+      title,
+      content,
+      isDone: false,
+    };
+    dispatch(addTodo(newTodo));
   };
 
   return (

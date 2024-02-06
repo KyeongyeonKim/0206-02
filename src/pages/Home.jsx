@@ -9,7 +9,8 @@ const Home = () => {
     <div>
       <Header></Header>
       <Input></Input>
-      <TodoList></TodoList>
+      <TodoList isDone={true}></TodoList>
+      <TodoList isDone={false}></TodoList>
       <Footer></Footer>
     </div>
   );
